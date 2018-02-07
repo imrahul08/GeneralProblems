@@ -3,16 +3,8 @@ package tree;
 public class Utilities {
 
 	public static void main(String[] args) {
-		Node node = new Node(4);
-		node.left = new Node(2);
-		node.left.left = new Node(1);
-		node.left.right = new Node(3);
-		node.right = new Node(10);
-		node.right.left = new Node(8);
-		node.right.right = new Node(12);
-		node.right.left.left = new Node(9);
-		node.right.left.right = new Node(7);
 		
+		Tree node = createTestTree();
 		
 		System.out.println("inorder traversal");
 		inorder(node);
@@ -30,7 +22,19 @@ public class Utilities {
 		
 	}
 	
-	public static void inorder(Node root){
+	public static Tree createTestTree(){
+		Tree node = new Tree(4);
+		node.left = new Tree(2);
+		node.left.left = new Tree(1);
+		node.left.right = new Tree(3);
+		node.right = new Tree(10);
+		node.right.left = new Tree(8);
+		node.right.right = new Tree(12);
+		node.right.left.left = new Tree(7);
+		node.right.left.right = new Tree(9);
+		return node;
+	}
+	public static void inorder(Tree root){
 		if(root==null){
 			return;
 		}
@@ -40,7 +44,7 @@ public class Utilities {
 	}
 	
 	
-	public static void preorder(Node root){
+	public static void preorder(Tree root){
 		if(root==null){
 			return;
 		}
@@ -49,7 +53,7 @@ public class Utilities {
 		preorder(root.right);
 	}
 	
-	public static void postorder(Node root){
+	public static void postorder(Tree root){
 		if(root==null){
 			return;
 		}
@@ -58,7 +62,7 @@ public class Utilities {
 		System.out.print(root.data + " ");
 	}
 	
-	public static int height(Node root){
+	public static int height(Tree root){
 		if(root==null){
 			return 0;
 		}else{
@@ -66,11 +70,11 @@ public class Utilities {
 		}
 	}
 	
-	public static boolean checkIfBST(Node root){
+	public static boolean checkIfBST(Tree root){
 		return checkIfBSTUtil(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
 	}
 	
-	public static boolean checkIfBSTUtil(Node node, int min, int max){
+	public static boolean checkIfBSTUtil(Tree node, int min, int max){
 		if(node == null){
 			return true;
 		}
