@@ -21,14 +21,15 @@ public class Queue<T> {
 		
 	}
 	public void enqueue(T element){
-		/*if(front){
-			throw new StackOverflowError("Queue is full");
+		if(front==rear && arr[front]!=null){
+			throw new RuntimeException("Queue is full");
 		}
-		arr[++top] = element;*/
+		arr[rear++] = element;
+		rear = rear%size;
 	}
 	
 	public T dequeue(){
-		if(front==rear){
+		if(front==rear && arr[front]==null){
 			throw new RuntimeException("Queue is empty");
 		}
 		@SuppressWarnings("unchecked")
@@ -41,12 +42,24 @@ public class Queue<T> {
 	
 	public String toString(){
 		StringBuffer sb = new StringBuffer("[");
-		for(int i=front;i<size+rear;i++){
-			sb.append(arr[i].toString());
-			sb.append(",");
+		if(front<rear){
+			for(int i=front;i<rear-1;i++){
+				sb.append(arr[i].toString());
+				sb.append(",");
+			}
 		}
-		if(rear!=-1){
-			sb.append(arr[rear].toString());
+		else if(front==rear && arr[front]!=null){
+			for(int i=front;i<size;i++){
+				sb.append(arr[i].toString());
+				sb.append(",");
+			}
+			for(int i=0;i<rear-1;i++){
+				sb.append(arr[i].toString());
+				sb.append(",");
+			}
+		}
+		if(arr[rear-1]!=null){
+			sb.append(arr[rear-1].toString());
 		}
 		sb.append("]");
 		
