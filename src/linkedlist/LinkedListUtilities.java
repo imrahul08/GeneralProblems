@@ -11,6 +11,23 @@ public class LinkedListUtilities {
 		return node;
 	}
 	
+	
+	public static Node createTestList2(){
+		Node node = new Node(9);
+		node.next = new Node(8);
+		node.next.next = new Node(7);
+		node.next.next.next = new Node(6);
+		node.next.next.next.next = new Node(5);
+		return node;
+	}
+	
+	public static Node createTestList3(){
+		Node node = new Node(9);
+		node.next = new Node(8);
+		node.next.next = new Node(7);
+		node.next.next.next = new Node(6);
+		return node;
+	}
 	public static void travereList(Node node){
 		if(node == null){
 			return;
@@ -66,15 +83,137 @@ public class LinkedListUtilities {
 			return node1;
 		}
 		
-		Node node3 = node1;
+		Node node3 = null;
+		Node start = null;
 		
-		while(node1.next!=null){
+		while(node1!=null){
+			Node temp = new Node(node1.data);
+			if(start==null){
+				start = temp;
+			}else{
+				node3.next = temp;
+			}
+			node3 = temp;
 			node1 = node1.next;
-			
 		}
-		node1.next = node2;
-		return node3;
+		
+		while(node2!=null){
+			Node temp = new Node(node2.data);
+			node3.next = temp;
+			node3 = temp;
+			node2 = node2.next;
+		}
+		return start;
 	}
+	
+	
+	
+	public static Node addLists(Node node1, Node node2){
+		node1= reverseList(node1);
+		node2= reverseList(node2);
+		int carry = 0;
+		Node node3 = null;
+		Node start = null;
+		while(node1!=null && node2!=null){
+			int num = node1.data + node2.data + carry;
+			Node temp = new Node(num%10);
+			if(start==null){
+				start = temp;
+			}else{
+				node3.next = temp;
+			}
+			node3 = temp;
+			carry = num/10;
+			node1 = node1.next;
+			node2 = node2.next;
+		}
+		
+		if(node1==null){
+			while(node2!=null){
+				int num = node2.data + carry;
+				Node temp = new Node(num%10);
+				node3.next = temp;
+				node3 = temp;
+				carry = num/10;
+				node2 = node2.next;
+			}
+		}else{
+			while(node1!=null){
+				int num = node1.data + carry;
+				Node temp = new Node(num%10);
+				node3.next = temp;
+				node3 = temp;
+				carry = num/10;
+				node1 = node1.next;
+			}
+		}
+		if(carry==1){
+			node3.next = new Node(carry);
+		}
+		return reverseList(start);
+	}
+	
+	public static Node addListsUsingRecursion(Node node1, Node node2){
+		if(node1.next==null && node2.next ==null){
+			int num = node1.data + node2.data;
+			return new Node(num);
+		}
+		Node node = addListsUsingRecursion(node1.next, node2.next);
+		int num = node.data;
+		node.data = num%10;
+		int carry = num/10;
+		Node newNode = new Node(node1.data+node2.data+carry);
+		newNode.next = node;
+		return newNode;
+	}
+	
+	public static Node addListsUsingRecursionUtility(Node node1, Node node2){
+		Node node = addListsUsingRecursion(node1, node2);
+		if(node!=null){
+			int num = node.data;
+			node.data = num%10;
+			int carry = num/10;
+			if(carry>0){
+				Node newNode = new Node(carry);
+				newNode.next = node;
+				return newNode;
+			}
+		}
+		return node;
+	}
+	
+	public static Node addListForDifferentLengthUsingRecursionUtility(Node node1, Node node2){
+		int l1 = length(node1);
+		int l2 = length(node2);
+		
+		int diff = l1 - l2;
+		
+		if(diff==0){
+			return addListsUsingRecursionUtility(node1, node2);
+		}else if(diff>0){
+			return addListForDifferentLengthUsingRecursion(node1, node2, diff);
+		}else{
+			return addListForDifferentLengthUsingRecursion(node2, node1, diff);
+		}
+		
+	}
+	
+	public static Node addListForDifferentLengthUsingRecursion(Node node1, Node node2, int diff){
+		if(diff==0){
+			return addListsUsingRecursion(node1, node2);
+		}
+		Node node = addListForDifferentLengthUsingRecursion(node1.next, node2, diff-1);
+		if(node!=null){
+			int num = node.data;
+			node.data = num%10;
+			int carry = num/10;
+			Node newNode = new Node(node1.data+carry);
+			newNode.next = node;
+			return newNode;
+		}
+		return node;
+	}
+	
 	
 	public static void main(String[] args){
 		Node node = createTestList();
@@ -87,9 +226,30 @@ public class LinkedListUtilities {
 		System.out.println(checkIfLoop(node));
 		
 		Node node2 = createTestList();
-		node = appendList(node1, node2);
-		System.out.println("Traverse List:");
-		travereList(node);
+		Node node3 = appendList(node1, node2);
+		Node node4 = appendList(node1, node2);
+		System.out.println("Appended Traverse List:");
+		travereList(node3);
+		
+		Node node5 = addLists(node4, node3);
+		System.out.println("\nAdding Traverse List:");
+		travereList(node5);
+		
+		
+		Node node6 = createTestList();
+		Node node7 = createTestList2();
+		Node node8 = addListsUsingRecursionUtility(node6, node7);
+		
+		System.out.println("\nAdding Recursion Traverse List:");
+		travereList(node8);
+		
+		
+		Node node9 = createTestList();
+		Node node10 = createTestList3();
+		Node node11 = addListForDifferentLengthUsingRecursionUtility(node9, node10);
+		
+		System.out.println("\nAdding Different Recursion Traverse List:");
+		travereList(node11);
 		
 	}
 	
