@@ -3,8 +3,8 @@ package dictionary;
 public class Entry<K, V> {
 	private K key;
 	private V value;
-	private Entry<K, V> next;
-	private Entry<K, V> previous;
+	protected Entry<K, V> next;
+	protected Entry<K, V> previous;
 	
 	public Entry(K key, V value){
 		this.key = key;
