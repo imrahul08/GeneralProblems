@@ -29,7 +29,7 @@ public class Queue<T> {
 	}
 	
 	public T dequeue(){
-		if(front==rear && arr[front]==null){
+		if(isEmpty()){
 			throw new RuntimeException("Queue is empty");
 		}
 		@SuppressWarnings("unchecked")
@@ -38,6 +38,13 @@ public class Queue<T> {
 		front = front%size;
 		return e;
 		
+	}
+	
+	public boolean isEmpty(){
+		if(front==rear && arr[front]==null){
+			return true;
+		}
+		return false;
 	}
 	
 	public String toString(){
