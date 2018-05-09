@@ -28,5 +28,9 @@ public class Utilities {
 		int[][] arr = {{1,2},{3,4}};
 		return arr;
 	}
+	
+	public static int max(int a, int b){
+		return a>b ?a :b;
+	}
 
 }

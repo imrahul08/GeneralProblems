@@ -21,6 +21,9 @@ public class Queue<T> {
 		
 	}
 	public void enqueue(T element){
+		if(element==null){
+			return;
+		}
 		if(front==rear && arr[front]!=null){
 			throw new RuntimeException("Queue is full");
 		}

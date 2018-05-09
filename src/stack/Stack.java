@@ -50,5 +50,12 @@ public class Stack<T> {
 		return sb.toString();
 	}
 	
+	public boolean isEmpty(){
+		if(top==-1){
+			return true;
+		}
+		return false;
+	}
+	
 
 }
