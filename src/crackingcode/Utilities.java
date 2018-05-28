@@ -32,5 +32,13 @@ public class Utilities {
 	public static int max(int a, int b){
 		return a>b ?a :b;
 	}
+	
+	public static int maxIndex(int[]arr, int i, int j){
+		return arr[i]>=arr[j] ?i :j;
+	}
+	
+	public static int minIndex(int[]arr, int i, int j){
+		return arr[i]<=arr[j] ?i :j;
+	}
 
 }

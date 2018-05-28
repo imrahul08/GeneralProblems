@@ -2,7 +2,7 @@ package tree;
 
 import stack.Stack;
 
-public class ZingzagLabelTraversal {
+public class ZingzagLevelTraversal {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

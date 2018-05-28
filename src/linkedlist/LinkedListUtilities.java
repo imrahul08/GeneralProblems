@@ -28,6 +28,34 @@ public class LinkedListUtilities {
 		node.next.next.next = new Node(6);
 		return node;
 	}
+	
+	public static Node createList(Node start, int data){
+		if(start==null){
+			start = new Node(data);
+			return start;
+		}
+		Node temp = start;
+		while(temp.next != null){
+			temp = temp.next;
+		}
+		temp.next = new Node(data);
+		return start;
+	}
+	
+	public static Node createLinkedList(int[] arr){
+		Node start = null;
+		Node node = null;
+		for(int i=0; i<arr.length;i++){
+			if(start == null){
+				start = new Node(arr[i]);
+				node = start;
+			}else{
+				node.next = new Node(arr[i]);
+				node = node.next;
+			}
+		}
+		return start;
+	}
 	public static void travereList(Node node){
 		if(node == null){
 			return;
@@ -212,6 +240,57 @@ public class LinkedListUtilities {
 			return newNode;
 		}
 		return node;
+	}
+	
+	public static Node multiplyList(Node node1, Node node2){
+		node1 = reverseList(node1);
+		node2 = reverseList(node2);
+		Node start2 = node2;
+		Node start = null;
+		Node start1 = null;
+		Node node3 = null;
+		Node node4 = null;
+		while(node1!=null){
+			int carry = 0;
+			node2 = start2;
+			while(node2!=null){
+				int num = node1.data * node2.data + carry;
+				if(start == null){
+					
+					start = new Node(num);
+					start1 = start;
+					node3 = start;
+				}else{
+					if(node3.next==null && node4==null){
+						carry = num/10;
+						num = num%10;
+						Node temp = new Node(num);
+						node3.next = temp;
+					}else{
+						num += node3.data;
+						carry = num/10;
+						num = num%10;
+						node3.data = num;
+					}
+					node3 = node3.next;
+					if(node4!=null){
+						node4 = node4.next;
+					}
+				}
+				
+				node2 = node2.next;
+			}
+			node1 = node1.next;
+			if(carry!=0){
+				node3.next = new Node(carry);
+				carry = 0;
+			}
+			start1 = start.next;
+			node3 = start1;
+			node4 = node3;
+		}
+		return reverseList(start);
+		
 	}
 	
 	

@@ -1,5 +1,12 @@
 package tree;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import queue.Queue;
+
 public class Utilities {
 
 	public static void main(String[] args) {
@@ -62,6 +69,33 @@ public class Utilities {
 		System.out.print(root.data + " ");
 	}
 	
+	public static void levelOrder(Tree root){
+		if(root==null){
+			return;
+		}
+		Queue<Tree> queue = new Queue<>();
+		queue.enqueue(root);
+		System.out.println("Label order traversal:");
+		int len = 1;
+		while(!queue.isEmpty()){
+			int counter = 0;
+			for(int i=0;i<len;i++){
+				Tree node = queue.dequeue();
+				System.out.print(node.data+" ");
+				if(node.left!=null){
+					queue.enqueue(node.left);
+					counter++;
+				}
+				if(node.right!=null){
+					queue.enqueue(node.right);
+					counter++;
+				}
+			}
+			System.out.println();
+			len = counter;
+		}
+	}
+	
 	public static int height(Tree root){
 		if(root==null){
 			return 0;
@@ -82,6 +116,38 @@ public class Utilities {
 			return false;
 		}
 		return checkIfBSTUtil(node.left, min, node.data) && checkIfBSTUtil(node.right, node.data, max);
+	}
+	
+	public static boolean checkIfElementExists(Tree node, int data){
+		if(node==null){
+			return false;
+		}
+		if(node.data == data){
+			return true;
+		}
+		return checkIfElementExists(node.left, data) || checkIfElementExists(node.right, data);
+	}
+	
+	public static List<Integer> pathFromRootToNode(Tree node, int data, List<Integer> list){
+		if(node==null){
+			return null;
+		}
+		if(node.data == data){
+			list.add(data);
+			return list;
+		}
+		list = new ArrayList<>(list);
+		list.add(node.data);
+		List<Integer> list1 = pathFromRootToNode(node.left, data, list);
+		List<Integer> list2 = pathFromRootToNode(node.right, data, list);
+		if(list1!=null && list1.size()>0 && list1.get((list1.size()-1)) == data){
+			return list1;
+		}
+		if(list2!=null && list2.size()>0 && list2.get((list2.size()-1)) == data){
+			return list2;
+		}
+		return new ArrayList<>();
+		
 	}
 	
 
